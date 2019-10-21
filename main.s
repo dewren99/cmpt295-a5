@@ -1,25 +1,6 @@
 	.file	"main.c"
 	.text
 	.p2align 4,,15
-	.globl	compar
-	.type	compar, @function
-compar:
-.LFB24:
-	.cfi_startproc
-	movss	(%rdi), %xmm0
-	xorl	%eax, %eax
-	movss	(%rsi), %xmm1
-	ucomiss	%xmm1, %xmm0
-	seta	%al
-	xorl	%edx, %edx
-	ucomiss	%xmm0, %xmm1
-	seta	%dl
-	subl	%edx, %eax
-	ret
-	.cfi_endproc
-.LFE24:
-	.size	compar, .-compar
-	.p2align 4,,15
 	.globl	u2f
 	.type	u2f, @function
 u2f:
@@ -47,7 +28,7 @@ u2f:
 	.globl	main
 	.type	main, @function
 main:
-.LFB25:
+.LFB24:
 	.cfi_startproc
 	pushq	%rbx
 	.cfi_def_cfa_offset 16
@@ -62,15 +43,15 @@ main:
 	call	puts@PLT
 	leaq	4(%rbx), %rax
 	leaq	96(%rbx), %rdx
-	movl	$0x7060000f, 16(%rsp)
+	movl	$0x5060000f, 16(%rsp)
 	movss	.LC3(%rip), %xmm0
 	.p2align 4,,10
 	.p2align 3
-.L5:
+.L4:
 	movss	%xmm0, (%rax)
 	addq	$4, %rax
 	cmpq	%rax, %rdx
-	jne	.L5
+	jne	.L4
 	leaq	.LC4(%rip), %rsi
 	movl	$1, %edi
 	xorl	%eax, %eax
@@ -84,12 +65,6 @@ main:
 	movl	$1, %edi
 	xorl	%eax, %eax
 	call	__printf_chk@PLT
-	leaq	compar(%rip), %rcx
-	movl	$4, %edx
-	movq	%rbx, %rdi
-	movl	$24, %esi
-	xorl	%eax, %eax
-	call	qsort@PLT
 	movq	%rbx, %rdi
 	movl	$24, %esi
 	leaq	112(%rsp), %rbx
@@ -107,10 +82,10 @@ main:
 	movl	$613566757, %edi
 	movsd	.LC7(%rip), %xmm2
 	movl	$-1431655765, %r8d
-	jmp	.L6
+	jmp	.L5
 	.p2align 4,,10
 	.p2align 3
-.L8:
+.L7:
 	movl	%ecx, %eax
 	xorl	%r9d, %r9d
 	mull	%r8d
@@ -120,7 +95,7 @@ main:
 	sete	%r9b
 	addq	$4, %rsi
 	addl	$1, %r9d
-.L6:
+.L5:
 	movl	%ecx, %eax
 	pxor	%xmm1, %xmm1
 	mull	%edi
@@ -142,7 +117,7 @@ main:
 	cvtsd2ss	%xmm1, %xmm1
 	movss	%xmm1, (%rsi)
 	addss	%xmm1, %xmm0
-	jne	.L8
+	jne	.L7
 	leaq	.LC4(%rip), %rsi
 	movl	$1, %edi
 	xorl	%eax, %eax
@@ -157,12 +132,6 @@ main:
 	movl	$1, %edi
 	xorl	%eax, %eax
 	call	__printf_chk@PLT
-	leaq	compar(%rip), %rcx
-	movl	$4, %edx
-	movl	$50, %esi
-	movq	%rbx, %rdi
-	xorl	%eax, %eax
-	call	qsort@PLT
 	movl	$50, %esi
 	movq	%rbx, %rdi
 	call	sum_float@PLT
@@ -174,26 +143,26 @@ main:
 	call	puts@PLT
 	movq	312(%rsp), %rax
 	xorq	%fs:40, %rax
-	jne	.L13
+	jne	.L12
 	addq	$320, %rsp
 	.cfi_remember_state
 	.cfi_def_cfa_offset 16
 	popq	%rbx
 	.cfi_def_cfa_offset 8
 	ret
-.L13:
+.L12:
 	.cfi_restore_state
 	call	__stack_chk_fail@PLT
 	.cfi_endproc
-.LFE25:
+.LFE24:
 	.size	main, .-main
 	.section	.rodata.cst4,"aM",@progbits,4
 	.align 4
 .LC2:
-	.long	1885339663
+	.long	1348468751
 	.align 4
 .LC3:
-	.long	1669332997
+	.long	1132462085
 	.section	.rodata.cst8,"aM",@progbits,8
 	.align 8
 .LC7:

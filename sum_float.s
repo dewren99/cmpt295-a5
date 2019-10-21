@@ -20,14 +20,14 @@ sum_float:
 	movq	$1, %rdx
 	movq	%rsp, %rcx
 	movq	%rsp, %r8
-	movq	$0, %r9
+	movq	$0, %r9 # flag
 
 	xorps	%xmm0, %xmm0            # total <- 0.0
 	leaq	(%rdi, %rsi, 4), %rbp   # endptr <- F + n
 
 loop:
 	cmpq	%rdx, %rsi			# n - i ? 0
-	jl endloop
+	jle endloop
 
 is_q_empty:
 	cmp 	%rsp, %r8 	# head(Q) - tail(Q) ? 0
@@ -36,7 +36,7 @@ is_q_empty:
 
 is_f_empty:
 	cmpq	%rdi, %rbp # endptr - Base pointer ? 0
-	jne		interpret_flag_num # if Q and F not empty compare heads
+	jg		interpret_flag_num # if Q and F not empty compare heads
 	add		$3, %r9 # flag number = 3
 	jmp interpret_flag_num
 
@@ -114,6 +114,11 @@ enqueue:
 
 endloop:
 	movss 	(%rsp), %xmm0
+	cmp		%rsp, %r8
+	jle		end
+	addss	(%r8), %xmm0
+	jmp 	end
+end:
 	movq 	%rcx, %rsp
 	pop		%rbp
 	ret
