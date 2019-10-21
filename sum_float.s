@@ -110,10 +110,9 @@ enqueue:
 
 endloop:
 	movss 	(%rsp), %xmm0
-	cmp		%rsp, %r8
-	jle		end
-	addss	(%r8), %xmm0
+	addss 	(%r8), %xmm0
 	jmp 	end
+	
 end:
 	movq 	%rcx, %rsp
 	pop		%rbp
