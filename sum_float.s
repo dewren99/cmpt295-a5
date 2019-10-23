@@ -18,6 +18,7 @@ sum_float:
 	push	%rbp
 	movq	$1, %rdx
 	movq	%rsp, %rcx
+	leaq	-4(%rsp),%rsp
 	movq	%rsp, %r8
 	movq	$0, %r9 # flag
 
@@ -30,7 +31,7 @@ loop:
 
 is_q_empty:
 	cmp 	%rsp, %r8 	# head(Q) - tail(Q) ? 0
-	jg	 	is_f_empty 	# Q is not empty
+	jge	 	is_f_empty 	# Q is not empty
 	add 	$1, %r9		# Q is empty set flag # to 1
 
 is_f_empty:
@@ -92,17 +93,17 @@ dequeue_y_from_F:
 get_x_from_Q:
 	add	$10, %r9
 	movss (%r8), %xmm1
-	leaq -8(%r8), %r8
+	leaq -4(%r8), %r8
 	jmp is_q_empty
 
 get_y_from_Q:
 	movss (%r8), %xmm2
-	leaq -8(%r8), %r8
+	leaq -4(%r8), %r8
 	jmp enqueue
 
 enqueue:
 	addss	%xmm1, %xmm2
-	leaq 	-8(%rsp), %rsp
+	leaq 	-4(%rsp), %rsp
 	movss 	%xmm2, (%rsp)
 	movq	$0, %r9 # reset flag number
 	incq 	%rdx
@@ -112,7 +113,7 @@ endloop:
 	movss 	(%rsp), %xmm0
 	addss 	(%r8), %xmm0
 	jmp 	end
-	
+
 end:
 	movq 	%rcx, %rsp
 	pop		%rbp
