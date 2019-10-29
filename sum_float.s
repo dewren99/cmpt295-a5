@@ -12,7 +12,7 @@
 	#	%rsp:	tail of Q
 	#	%xmm1:	x
 	#	%xmm2:	y
-	#	%r9:	flag that holds numbers for conditions
+	#	%r9:	flag, holds certain special numbers for certain conditions
 
 sum_float:
 	push	%rbp
